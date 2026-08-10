@@ -87,11 +87,14 @@ a per-user Scheduled Task that runs `intentd serve --resume-all` at logon. Set
 Download the archive for your platform from the fixed
 [`sitter-latest`](https://github.com/intent-hq/intentd-releases/releases/tag/sitter-latest)
 release — `intentd-<target>.tar.xz` on macOS/Linux, `intentd-<target>.zip` on
-Windows, each with a `.sha256` sidecar — extract it, and put `intentd` on your
-`PATH`. Then run `intentd serve` (or wire up your own service around it).
+Windows, each with a `.sha256` sidecar — verify the checksum, extract it, and put
+`intentd` on your `PATH`. Then run `intentd serve` (or wire up your own service
+around it).
 
 ```sh
 curl -fLO https://github.com/intent-hq/intentd-releases/releases/download/sitter-latest/intentd-aarch64-apple-darwin.tar.xz
+curl -fLO https://github.com/intent-hq/intentd-releases/releases/download/sitter-latest/intentd-aarch64-apple-darwin.tar.xz.sha256
+shasum -a 256 -c intentd-aarch64-apple-darwin.tar.xz.sha256   # Linux: sha256sum -c
 tar -xJf intentd-aarch64-apple-darwin.tar.xz
 # → intentd-aarch64-apple-darwin/intentd
 ```
