@@ -98,8 +98,9 @@ tar -xJf intentd-aarch64-apple-darwin.tar.xz
 
 ## Host requirements
 
-- **git** — required. Workspace provisioning and daemon-side fetch/pull/push shell
-  out to the `git` CLI.
+- **git** — required. Workspace provisioning and daemon-side fetch (including the
+  fetch step of pull) shell out to the `git` CLI (local status/stage/commit and
+  push use bundled libgit2).
 - **Node.js** (with `npm`/`npx`) — required to run the coding-agent provider CLIs:
   several providers are npm-installed or launched via pinned `npx` packages
   (auggie, claude-code, codex, …).
@@ -120,9 +121,10 @@ intentd pair --png pair.png   # also export the QR code as an image
 
 The payload embeds everything a client needs: the machine's LAN IP(s), the WSS port
 (`server.wsApi.port`, default **5181**), the TLS certificate fingerprint (clients pin
-it), and the bearer token. Scan the QR code with the Intent iOS app, or use the URI
-in the desktop app's remote-connection flow. `intentd token` prints the same
-credentials in plaintext.
+it), and the bearer token. Scan the QR code with the Intent iOS app. The desktop
+app's remote-connection flow takes the host, port, and token entered manually
+instead (`intentd token` prints them in plaintext) and captures the TLS fingerprint
+on first connect.
 
 - On intentd **v0.6.3+**, if the WSS listener is not running, `pair` offers to enable
   it on the spot — it persists `server.wsApi.enabled = true` and starts the listener
@@ -139,8 +141,8 @@ credentials in plaintext.
   ```
 
 - Make sure the port is reachable from your clients (open TCP 5181 in the machine's
-  firewall for your LAN or tailnet). There is no plaintext listener — remote traffic
-  is always WSS with TLS and bearer-token auth.
+  firewall for your LAN or tailnet). Remote traffic is always WSS with TLS and
+  bearer-token auth.
 
 ## Channels — stable vs beta
 
@@ -164,12 +166,12 @@ No source code lives here. This repository hosts release artifacts mirrored from
 `intent-hq/intentd` source repository:
 
 - **`sitter-vX.Y.Z` releases and the fixed `sitter-latest` release** — sitter
-  archives (`intentd-<target>.tar.xz` / `.zip`), Debian packages
+  archives (`intentd-<target>.tar.xz` / `.zip`) and Debian packages
   (versioned `intentd_<version>_<arch>.deb` plus constant-named
-  `intentd_amd64.deb` / `intentd_arm64.deb` copies on `sitter-latest`), the
-  `install.sh` / `install.ps1` scripts, all with `.sha256` sidecars.
-  `sitter-latest` always tracks the newest sitter — do not consume the tag itself;
-  download its assets.
+  `intentd_amd64.deb` / `intentd_arm64.deb` copies on `sitter-latest`), each with a
+  `.sha256` sidecar. The `install.sh` / `install.ps1` scripts are published on
+  `sitter-latest` only (no sidecars). `sitter-latest` always tracks the newest
+  sitter — do not consume the tag itself; download its assets.
 - **`vX.Y.Z` releases** — daemon platform archives the sitter downloads
   (`intentd-<target>.tar.xz` / `.zip`) and their `.sha256` sidecars.
 - **`channel-beta` / `channel-stable` releases** — machine-readable `beta.json` /
