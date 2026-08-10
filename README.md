@@ -163,6 +163,19 @@ Automatic update checks are strictly newer-only; `--redownload` is the explicit
 downgrade path (e.g. beta → stable). Per-launch overrides take precedence over the
 pin: `intentd --sitter-channel beta serve`, or set `INTENTD_CHANNEL=beta`.
 
+To update immediately instead of waiting for the periodic 12–24 h check, use the
+sitter-owned `intentd update` command:
+
+```sh
+intentd update            # check now; install a newer version and restart the running daemon
+intentd update --check    # dry-run: report installed vs latest, install nothing
+```
+
+`intentd update` is newer-only too (never a downgrade). When it installs a new
+version it restarts a running supervised daemon in place so the update takes
+effect immediately; with no running service, the new binary takes effect on the
+next start.
+
 ## What's in this repository
 
 No source code lives here. This repository hosts release artifacts mirrored from the
