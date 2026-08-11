@@ -126,8 +126,8 @@ The payload embeds everything a client needs: the machine's LAN IP(s), the WSS p
 (`server.wsApi.port`, default **5181**), the TLS certificate fingerprint (clients pin
 it), and the bearer token. Scan the QR code with the Intent iOS app. The desktop
 app's remote-connection flow takes the host, port, and token entered manually
-instead (`intentd token` prints them in plaintext) and captures the TLS fingerprint
-on first connect.
+instead (`intentd pair` prints them as labeled plaintext lines alongside the QR
+code) and captures the TLS fingerprint on first connect.
 
 - On intentd **v0.6.3+**, if the WSS listener is not running, `pair` offers to enable
   it on the spot — it persists `server.wsApi.enabled = true` and starts the listener
