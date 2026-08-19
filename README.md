@@ -47,12 +47,24 @@ to skip.
 > lingering is enabled. Run `sudo loginctl enable-linger $USER` once so the intentd
 > service starts at boot and survives SSH logout.
 
+```sh
+intentd pair   # pairing info for remote clients (URL/token/fingerprint) — skip if only the local desktop app uses this daemon
+```
+
+To connect the desktop or mobile app from another machine, run `intentd pair` once
+the daemon is running (the service starts it; if you declined service setup, start
+it with `intentd serve` first) — see
+[Remote access](#remote-access--pair-a-client).
+
 ### macOS / Linux — Homebrew
 
 ```sh
 brew install intent-hq/tap/intentd
 # Run as a login service (launchd/systemd) — executes `intentd serve --resume-all`:
 brew services start intentd
+# Pairing info for remote clients (URL/token/fingerprint) — skip if only the
+# local desktop app uses this daemon; see "Remote access" below:
+intentd pair
 ```
 
 The formula lives in [intent-hq/homebrew-tap](https://github.com/intent-hq/homebrew-tap)
@@ -65,6 +77,9 @@ curl -fLO https://github.com/intent-hq/intentd-releases/releases/download/sitter
 sudo apt install ./intentd_amd64.deb
 # The package does not auto-enable the unit (it is per-user); start it with:
 systemctl --user enable --now intentd
+# Pairing info for remote clients (URL/token/fingerprint) — skip if only the
+# local desktop app uses this daemon; see "Remote access" below:
+intentd pair
 ```
 
 Installs the sitter at `/usr/bin/intentd` and a systemd **user** unit at
@@ -82,6 +97,15 @@ Installs `intentd.exe` to `%LOCALAPPDATA%\intentd\bin` (override with
 a per-user Scheduled Task that runs `intentd serve --resume-all` at logon. Set
 `$env:INTENTD_INSTALL_SERVICE = '1'` to register without prompting, `'0'` to skip.
 
+```powershell
+intentd pair   # pairing info for remote clients (URL/token/fingerprint) — skip if only the local desktop app uses this daemon
+```
+
+To connect the desktop or mobile app from another machine, run `intentd pair` once
+the daemon is running (the scheduled task starts it; if you declined task setup,
+start it with `intentd serve` first) — see
+[Remote access](#remote-access--pair-a-client).
+
 ### Direct download
 
 Download the archive for your platform from the fixed
@@ -98,6 +122,10 @@ shasum -a 256 -c intentd-aarch64-apple-darwin.tar.xz.sha256   # Linux: sha256sum
 tar -xJf intentd-aarch64-apple-darwin.tar.xz
 # → intentd-aarch64-apple-darwin/intentd
 ```
+
+Once the daemon runs, `intentd pair` prints the pairing info remote clients need
+(URL/token/fingerprint) — skip it if only the local desktop app uses this daemon;
+see [Remote access](#remote-access--pair-a-client).
 
 ## Host requirements
 
