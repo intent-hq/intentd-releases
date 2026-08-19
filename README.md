@@ -51,8 +51,10 @@ to skip.
 intentd pair   # pairing info for remote clients (URL/token/fingerprint) — skip if only the local desktop app uses this daemon
 ```
 
-To connect the desktop or mobile app from another machine, run `intentd pair` after
-installing — see [Remote access](#remote-access--pair-a-client).
+To connect the desktop or mobile app from another machine, run `intentd pair` once
+the daemon is running (the service starts it; if you declined service setup, start
+it with `intentd serve` first) — see
+[Remote access](#remote-access--pair-a-client).
 
 ### macOS / Linux — Homebrew
 
@@ -99,8 +101,10 @@ a per-user Scheduled Task that runs `intentd serve --resume-all` at logon. Set
 intentd pair   # pairing info for remote clients (URL/token/fingerprint) — skip if only the local desktop app uses this daemon
 ```
 
-To connect the desktop or mobile app from another machine, run `intentd pair` after
-installing — see [Remote access](#remote-access--pair-a-client).
+To connect the desktop or mobile app from another machine, run `intentd pair` once
+the daemon is running (the scheduled task starts it; if you declined task setup,
+start it with `intentd serve` first) — see
+[Remote access](#remote-access--pair-a-client).
 
 ### Direct download
 
